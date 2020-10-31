@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1alpha1
 kind: Task
 metadata:
-  name: deploy-productpage-app
+  name: deploy-reviews-app
 spec:
   inputs:
     resources:
@@ -10,7 +10,7 @@ spec:
     params:
       - name: APP_NAME
         description: The name of the application
-        default: 'productpage-tekton'
+        default: 'reviews'
         type: string
       - name: APP_VERSION
         description: The version of the application
@@ -54,7 +54,7 @@ spec:
         command: ["/bin/bash", "-c"]
         args:
           - |-
-            oc label deployment/$(inputs.params.APP_NAME) app.kubernetes.io/name=productpage --overwrite -n $(inputs.params.DEPLOY_PROJECT)
+            oc label deployment/$(inputs.params.APP_NAME) app.kubernetes.io/name=reviews --overwrite -n $(inputs.params.DEPLOY_PROJECT)
             oc label deployment/$(inputs.params.APP_NAME) app.version=$(inputs.params.APP_VERSION) --overwrite -n $(inputs.params.DEPLOY_PROJECT)
       - name: describe-app-triggers
         image: quay.io/openshift/origin-cli:latest
