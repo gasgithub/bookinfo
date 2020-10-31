@@ -25,15 +25,24 @@ spec:
       - name: image
         type: image
   steps:
-    - name: run-gradle
-      image: docker.io/gradle/gradle:4.8.1
+    - name: gradle-clean
+      image: docker.io/gradle:4.8.1
       workingdir: /workspace/source/$(inputs.params.PATH_CONTEXT)
-      command: ['gradle', 'clean build', '.']
+      command: ['gradle', 'clean', '.']
       volumeMounts:
         - name: varlibcontainers
           mountPath: /var/lib/containers
       securityContext:
         privileged: true
+    - name: gradle-build
+      image: docker.io/gradle:4.8.1
+      workingdir: /workspace/source/$(inputs.params.PATH_CONTEXT)
+      command: ['gradle', 'build', '.']
+      volumeMounts:
+        - name: varlibcontainers
+          mountPath: /var/lib/containers
+      securityContext:
+        privileged: true        
     - name: build
       image: quay.io/buildah/stable:v1.11.0
       workingdir: /workspace/source/$(inputs.params.PATH_CONTEXT)/reviews-wlpcfg
