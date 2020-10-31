@@ -1,21 +1,18 @@
 apiVersion: tekton.dev/v1alpha1
 kind: Pipeline
 metadata:
-  name: details
-  -pipeline
+  name: details-pipeline
 spec:
   resources:
     - name: bookinfo-git
       type: git
-    - name: details
-    -image-dev
+    - name: details-image-dev
       type: image
 
   params:
     - name: APP_NAME
       description: The name of the application
-      default: 'details
-      -tekton'      
+      default: 'details-tekton'      
     - name: APP_VERSION
       description: The version of the application
       default: '1.0'      
@@ -26,8 +23,7 @@ spec:
   tasks:
   - name: build
     taskRef:
-      name: details
-      -build-push
+      name: details-build-push
 
     resources:       
       inputs:
@@ -35,12 +31,10 @@ spec:
           resource: bookinfo-git
       outputs:
         - name: image
-          resource: details
-          -image-dev
+          resource: details-image-dev
   - name: deploy
     taskRef:
-      name: deploy-details
-      -app
+      name: deploy-details-app
     runAfter:
       - build
     params:
@@ -53,5 +47,4 @@ spec:
     resources:
       inputs:
         - name: image
-          resource: details
-          -image-dev
+          resource: details-image-dev
