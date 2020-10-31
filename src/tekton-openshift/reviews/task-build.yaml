@@ -28,7 +28,7 @@ spec:
     - name: gradle-clean
       image: docker.io/gradle:4.8.1
       workingdir: /workspace/source/$(inputs.params.PATH_CONTEXT)
-      command: ['gradle', 'clean', '.']
+      command: ['gradle', 'clean']
       volumeMounts:
         - name: varlibcontainers
           mountPath: /var/lib/containers
@@ -37,7 +37,7 @@ spec:
     - name: gradle-build
       image: docker.io/gradle:4.8.1
       workingdir: /workspace/source/$(inputs.params.PATH_CONTEXT)
-      command: ['gradle', 'build', '.']
+      command: ['gradle', 'build']
       volumeMounts:
         - name: varlibcontainers
           mountPath: /var/lib/containers
